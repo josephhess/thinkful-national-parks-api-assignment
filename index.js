@@ -17,14 +17,11 @@ function watchDogFormSubmit() {
 function getDogsFromApi(breed){
   const url = `https://dog.ceo/api/breed/${breed}/images/random`;
   fetch(url)
-    .then(res => {
-      if (res.status === 200){
-        return res.json();
-      } else {
-        throw new Error('That breed was not found, please try a different breed');
-      }
-    })
+    .then(res => res.json())
     .then(results => {
+      if (results.status === 'error'){
+        throw new Error(`${results.message}, please try again`)
+      }
       decorateSingleResult(results.message)
     })
     .catch(e => {
