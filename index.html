@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>Dog Viewer</title>
+      <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+      <link href="responsive.css" rel="stylesheet" type="text/css" />
+      <link href="index.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <main class="col-12 main">
+      <div class="content-wrapper">
+        <section id="dog-header">
+          <header><h1>Dog Viewer 1</h1></header>
+        </section>
+
+        <section id="get-dogs">
+          <h2 class="h2-style"><label for="get-dogs-form">Choose how many dogs you would like to see</label></h2>
+          <form id="get-dogs-form">
+            <label for="dog-count">Dog Count</label>
+            <input type="number" name="dog-count" id="dog-count" min="1" max="50" value="3">
+            <button type="submit" name="submit" id="getDogsButton">Get Dogs</button>
+          </form>
+        </section>
+        <section id="results">
+        </section>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
