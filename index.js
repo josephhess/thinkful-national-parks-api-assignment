@@ -1,36 +1,44 @@
-const BASE_URL = 'https://dog.ceo/api/breeds/image/random/';
 
 function watchDogFormSubmit() {
   $('#get-dogs-form').on('submit', e => {
     e.preventDefault();
-    const count = $('#dog-count').val();
-    $('#dog-count').val(3);
-    getDogsFromApi(count);
+    $('#errors').html('');
+    $('#results').html('');
+
+    const breed = $('#dog-breed').val().toLowerCase();
+    if(breed.length === 0){
+      return $('#errors').html('Please enter a breed');
+    }
+    $('#dog-breed').val('');
+    getDogsFromApi(breed);
   })
 }
 
-
-function getDogsFromApi(count){
-  const url = `${BASE_URL}${count}`;
+function getDogsFromApi(breed){
+  const url = `https://dog.ceo/api/breed/${breed}/images/random`;
   fetch(url)
-    .then(res => res.json())
-    .then(results => decorateResults(results.message))
-    .catch(e => console.log(e));
+    .then(res => {
+      if (res.status === 200){
+        return res.json();
+      } else {
+        throw new Error('That breed was not found, please try a different breed');
+      }
+    })
+    .then(results => {
+      decorateSingleResult(results.message)
+    })
+    .catch(e => {
+      $('#errors').html(e);
+    });
 }
 
-function decorateResults(results){
-  const decorated = results.map(result => {
-    return decorateSingleResult(result);
-  })
+function decorateSingleResult(result,breed){
+  const decorated =  `
+    <li>
+      <img src="${result}" alt="A random image of ${breed} breed">
+    </li>
+  `;
   $('#results').html(decorated);
-}
-
-function decorateSingleResult(result){
-  return `
-  <li>
-    <img src="${result}" alt="A random dog image">
-  </li>
-`;
 }
 
 $(watchDogFormSubmit);

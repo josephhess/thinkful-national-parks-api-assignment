@@ -3,7 +3,7 @@
   <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width">
-      <title>Dog Viewer</title>
+      <title>Dog Viewer 2</title>
       <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -17,13 +17,16 @@
         <section id="dog-header">
           <header><h1>Dog Viewer 1</h1></header>
         </section>
+        <section id="messages">
+          <p id="errors"></p>
+        </section>
 
         <section id="get-dogs">
-          <h2 class="h2-style"><label for="get-dogs-form">Choose how many dogs you would like to see</label></h2>
+          <h2 class="h2-style"><label for="get-dogs-form">Input a dog breed to see a random image of that breed</label></h2>
           <form id="get-dogs-form">
-            <label for="dog-count">Dog Count</label>
-            <input type="number" name="dog-count" id="dog-count" min="1" max="50" value="3">
-            <button type="submit" name="submit" id="getDogsButton">Get Dogs</button>
+            <label for="dog-breed">Dog Breed</label>
+            <input type="text" name="dog-breed" id="dog-breed">
+            <button type="submit" name="submit" id="getDogsButton">Get Dog</button>
           </form>
         </section>
         <section>
