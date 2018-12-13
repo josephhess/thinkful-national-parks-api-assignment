@@ -1,5 +1,5 @@
 
-const API_KEY = '3ac10e296a9ea781c6e723f0840a7c990286910d';
+const API_KEY = /*Your api key here*/;
 
 function watchUsernameFormSubmit() {
   $('#get-repos-form').on('submit', e => {
