@@ -15,10 +15,6 @@ ul {
   list-style-type: none;
 }
 
-img {
-  width: 100%;
-}
-
 #errors {
   color: red;
 }
