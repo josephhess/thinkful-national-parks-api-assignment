@@ -3,7 +3,7 @@
   <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width">
-      <title>Github Repo Viewer</title>
+      <title>National Parks Viewer</title>
       <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -14,19 +14,21 @@
   <body>
     <main class="col-12 main">
       <div class="content-wrapper">
-        <section id="repo-header">
-          <header><h1>Github Repo Viewer</h1></header>
+        <section id="parks-header">
+          <header><h1>National Parks Viewer</h1></header>
         </section>
         <section id="messages">
           <p id="errors"></p>
         </section>
 
-        <section id="get-repos">
-          <h2><label for="get-repos-form">Input a Github Username to see their repos</label></h2>
-          <form id="get-repos-form">
-            <label for="repos">Github Username</label>
-            <input type="text" name="repos" id="repos">
-            <button type="submit" name="submit" id="getReposButton">Get Repos</button>
+        <section id="get-parks">
+          <h2><label for="get-parks-form">Input State(s) and how many park results you want</label></h2>
+          <form id="get-parks-form">
+            <label for="parks">States (separate multiple states with a comma)</label>
+            <input type="text" name="states" id="states" required="true">
+            <label for="result-count">How many results would you like</label>
+            <input type="number" name="result-count" id="result-count">
+            <button type="submit" name="submit" id="getParksButton">Get Parks</button>
           </form>
         </section>
         <section>

@@ -1,33 +1,25 @@
 
 const API_KEY = /*Your api key here*/;
 
-function watchUsernameFormSubmit() {
-  $('#get-repos-form').on('submit', e => {
+function watchFormSubmit() {
+  $('#get-parks-form').on('submit', e => {
     e.preventDefault();
     $('#errors').html('');
     $('#results').html('');
 
-    const username = $('#repos').val().toLowerCase();
-    if(!repos.length){
-      return $('#errors').html('Please enter a username');
-    }
-    $('#repos').val('');
-    getReposFromApi(username);
+    const states = $('#states').val().toLowerCase();
+    const limit = $('#result-count').val();
+
+    $('#states').val('');
+    $('#result-count').val('');
+    getParksFromApi(states,limit);
   })
 }
 
-function getReposFromApi(username){
-  const url = `https://api.github.com/users/${username}/repos`;
+function getParksFromApi(states, limit = 10){
+  const url = `https://api.nps.gov/api/v1/parks?stateCode=${states}&limit=${limit}&api_key=${API_KEY}&start=0&fields=addresses`;
 
-  const settings = {
-    headers: new Headers({
-      'Authorization':{
-        'token': API_KEY
-      }
-    })
-  }
-
-  fetch(url, settings)
+  fetch(url)
     .then(res => {
       if (res.ok){
         return res.json();
@@ -35,10 +27,11 @@ function getReposFromApi(username){
       throw new Error(res.statusText);
     })
     .then(results => {
-      if(!results.length){
-        $('#errors').html("Sorry, we could not find any results for that username");
+      if(!results.data.length){
+        $('#errors').html("Sorry, we could not find any results for that query");
       }
-      decorateResults(results)
+      console.log(results);
+       decorateResults(results.data);
     })
     .catch(e => {
       $('#errors').html(e);
@@ -52,15 +45,19 @@ function decorateResults(results){
   $('#results').html(decorated);
 }
 
-
 function decorateSingleResult(result){
+  const address = result.addresses.filter(address => !"Physical".localeCompare(address.type))[0];
   return `
     <li>
-      <h2>${result.name}:
-        <a href="${result.html_url}">${result.name} repo</a>
-      </h2>
+      <h2>${result.fullName}:</h2>
+        <a href="${result.url}">${result.name} Website</a>
+        <h3>Description:</h3>
+        <p>${result.description}</p>
+        <h3>Address:</h3>
+        <p>${address.line1}  ${address.city}  ${address.stateCode} ${address.postalCode}</p>
+        <hr>
     </li>
   `;
 }
 
-$(watchUsernameFormSubmit);
+$(watchFormSubmit);
