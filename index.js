@@ -1,13 +1,14 @@
 
+const API_KEY = '3ac10e296a9ea781c6e723f0840a7c990286910d';
+
 function watchUsernameFormSubmit() {
   $('#get-repos-form').on('submit', e => {
     e.preventDefault();
-    console.log('called');
     $('#errors').html('');
     $('#results').html('');
 
     const username = $('#repos').val().toLowerCase();
-    if(repos.length === 0){
+    if(!repos.length){
       return $('#errors').html('Please enter a username');
     }
     $('#repos').val('');
@@ -15,9 +16,18 @@ function watchUsernameFormSubmit() {
   })
 }
 
-function getReposFromApi(breed){
-  const url = `https://dog.ceo/api/breed/${breed}/images/random`;
-  fetch(url)
+function getReposFromApi(username){
+  const url = `https://api.github.com/users/${username}/repos`;
+
+  const settings = {
+    headers: new Headers({
+      'Authorization':{
+        'token': API_KEY
+      }
+    })
+  }
+
+  fetch(url, settings)
     .then(res => {
       if (res.ok){
         return res.json();
@@ -25,7 +35,10 @@ function getReposFromApi(breed){
       throw new Error(res.statusText);
     })
     .then(results => {
-      decorateResults(results.message)
+      if(!results.length){
+        $('#errors').html("Sorry, we could not find any results for that username");
+      }
+      decorateResults(results)
     })
     .catch(e => {
       $('#errors').html(e);
@@ -40,13 +53,14 @@ function decorateResults(results){
 }
 
 
-function decorateSingleResult(result,breed){
-  const decorated =  `
+function decorateSingleResult(result){
+  return `
     <li>
-      <img src="${result}" alt="A random image of ${breed} breed">
+      <h2>${result.name}:
+        <a href="${result.html_url}">${result.name} repo</a>
+      </h2>
     </li>
   `;
-  $('#results').html(decorated);
 }
 
 $(watchUsernameFormSubmit);
